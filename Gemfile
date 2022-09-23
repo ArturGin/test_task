@@ -12,6 +12,16 @@ gem "pg", "~> 1.1"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
 
+#pagination
+gem 'kaminari'
+#business logic
+gem "interactor"
+#serialization
+gem 'active_model_serializers'
+gem 'pry-rails'
+
+gem 'httparty'
+
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
 
@@ -39,6 +49,9 @@ gem "bootsnap", require: false
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem 'rspec-rails', '~> 4.1.0'
+  gem 'rubocop'
+  gem 'factory_bot_rails', require: false
 end
 
 group :development do
