@@ -3,21 +3,18 @@ class Api::V1::PostsController < Api::V1::ApplicationController
 
   def index
     render json: @posts,
-           meta: { total_pages: @posts.total_pages, total_count: @posts.total_count },
-           root: :posts,
-           adapter: :json,
            each_serializer: PostSerializer,
            status: :ok
   end
 
   def create
-    result = CreatePost.call(title: params[:title], 
-                             body: params[:body], 
-                             login: params[:login], 
+    result = CreatePost.call(title: params[:title],
+                             body: params[:body],
+                             login: params[:login],
                              ip: params[:ip])
     if result.success?
-    render json: result.post, serializer: PostSerializer,
-            status: :ok
+      render json: result.post, serializer: PostSerializer,
+             status: :ok
     else
       render json: { error: result.error }, status: :unprocessable_entity
     end
@@ -26,8 +23,7 @@ class Api::V1::PostsController < Api::V1::ApplicationController
   private
 
   def set_posts
-    @posts = Post.by_average(params[:average])
-                 .page(params[:page])
-                 .per(params[:limit])
+    @posts = Post.includes(:user).by_average(params[:average])
+                 .limit(params[:limit])
   end
 end

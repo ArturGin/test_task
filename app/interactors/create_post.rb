@@ -10,6 +10,7 @@ class CreatePost
   def call
     post = Post.create(title: context.title, body: context.body, ip: context.ip, user: context.user)
     context.fail!(error: post.errors) if post.errors.present?
+    post.include_user = true
     context.post = post
   end
 
